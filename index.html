@@ -1,4 +1,10 @@
-<style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Totem Instagram - Colegio Santo Tomás</title>
+  <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%;
@@ -10,10 +16,11 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      /* Forzamos la resolución estándar de TV en vertical */
+      /* Resolución fija de TV en vertical para evitar errores en Silk */
       width: 1080px;
       height: 1920px;
-      transform: translate(-50%, -50%) rotate(-90deg);
+      /* Cambiar a -90deg si la orientación de la TV lo requiere */
+      transform: translate(-50%, -50%) rotate(90deg);
     }
     iframe {
       width: 100% !important;
@@ -22,3 +29,37 @@
       display: block;
     }
   </style>
+</head>
+<body>
+
+  <div id="rotator" onclick="activarPantallaCompleta()">
+    <iframe
+      id="feed"
+      src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
+      scrolling="no"
+      allowtransparency="true"
+      class="lightwidget-widget">
+    </iframe>
+  </div>
+
+  <script>
+    // Recarga la página automáticamente cada 30 minutos
+    setTimeout(function () {
+      window.location.reload();
+    }, 30 * 60 * 1000);
+
+    // Función para pantalla completa
+    function activarPantallaCompleta() {
+      let elem = document.documentElement;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+      }
+    }
+  </script>
+
+</body>
+</html>
