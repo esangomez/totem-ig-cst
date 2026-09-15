@@ -12,16 +12,14 @@
       overflow: hidden;
       background-color: #000;
     }
-    /* Rota todo el contenido 90° para compensar que el Fire Stick
-       siempre manda la señal en horizontal aunque la TV esté vertical */
+    /* Centra el contenedor absoluto y rota el contenido 90° positivos */
     #rotator {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 50%;
+      left: 50%;
       width: 100vh;
       height: 100vw;
-      transform-origin: top left;
-      transform: rotate(-90deg) translateY(-100%);
+      transform: translate(-50%, -50%) rotate(90deg);
     }
     iframe {
       width: 100%;
@@ -46,7 +44,6 @@
 
   <script>
     // Recarga la página automáticamente cada 30 minutos
-    // para asegurarse de que el feed y el navegador no se cuelguen
     setTimeout(function () {
       window.location.reload();
     }, 30 * 60 * 1000);
