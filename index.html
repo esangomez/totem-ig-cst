@@ -16,9 +16,10 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      /* Resolución fija de TV en vertical para evitar errores en Silk */
-      width: 1080px;
-      height: 1920px;
+      /* Tamaño relativo a la pantalla real (no fijo), para que se adapte
+         sin importar la resolución exacta que reporte el Fire Stick */
+      width: 100vh;
+      height: 100vw;
       /* Cambiar a -90deg si la orientación de la TV lo requiere */
       transform: translate(-50%, -50%) rotate(90deg);
     }
@@ -33,6 +34,7 @@
 <body>
 
   <div id="rotator" onclick="activarPantallaCompleta()">
+    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
     <iframe
       id="feed"
       src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
