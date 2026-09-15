@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Totem Instagram - Colegio Santo Tomás</title>
-  <style>
+<style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       width: 100%;
@@ -13,55 +7,18 @@
       background-color: #fafafa;
     }
     #rotator {
-      position: fixed;
+      position: absolute;
       top: 50%;
       left: 50%;
-      width: 100vh;
-      height: 100vw;
+      /* Forzamos la resolución estándar de TV en vertical */
+      width: 1080px;
+      height: 1920px;
       transform: translate(-50%, -50%) rotate(-90deg);
     }
     iframe {
-      /* El !important evita que el JS de LightWidget achique el cuadro */
       width: 100% !important;
       height: 100% !important;
       border: none;
       display: block;
     }
   </style>
-</head>
-<body>
-
-  <div id="rotator" onclick="activarPantallaCompleta()">
-    <!-- Si incluso con el !important sigues viendo el espacio en blanco, 
-         puedes borrar completamente la siguiente línea del <script> -->
-     <!-- <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script> -->
-    <iframe
-      id="feed"
-      src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
-      scrolling="no"
-      allowtransparency="true"
-      class="lightwidget-widget">
-    </iframe>
-  </div>
-
-  <script>
-    // Recarga la página automáticamente cada 30 minutos
-    setTimeout(function () {
-      window.location.reload();
-    }, 30 * 60 * 1000);
-
-    // Función para pantalla completa
-    function activarPantallaCompleta() {
-      let elem = document.documentElement;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      }
-    }
-  </script>
-
-</body>
-</html>
