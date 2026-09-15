@@ -10,7 +10,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #fafafa; /* Fondo claro similar a Instagram */
+      background-color: #fafafa;
     }
     #rotator {
       position: fixed;
@@ -18,11 +18,12 @@
       left: 50%;
       width: 100vh;
       height: 100vw;
-      transform: translate(-50%, -50%) rotate(-90deg);
+      transform: translate(-50%, -50%) rotate(90deg);
     }
     iframe {
-      width: 100%;
-      height: 100%;
+      /* El !important evita que el JS de LightWidget achique el cuadro */
+      width: 100% !important;
+      height: 100% !important;
       border: none;
       display: block;
     }
@@ -30,8 +31,9 @@
 </head>
 <body>
 
-  <!-- El evento onclick activa la pantalla completa al presionar "Seleccionar" en el control -->
   <div id="rotator" onclick="activarPantallaCompleta()">
+    <!-- Si incluso con el !important sigues viendo el espacio en blanco, 
+         puedes borrar completamente la siguiente línea del <script> -->
     <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
     <iframe
       id="feed"
@@ -48,14 +50,14 @@
       window.location.reload();
     }, 30 * 60 * 1000);
 
-    // Función para ocultar la interfaz del navegador
+    // Función para pantalla completa
     function activarPantallaCompleta() {
       let elem = document.documentElement;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari / versiones viejas */
+      } else if (elem.webkitRequestFullscreen) {
         elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* Edge/IE */
+      } else if (elem.msRequestFullscreen) {
         elem.msRequestFullscreen();
       }
     }
