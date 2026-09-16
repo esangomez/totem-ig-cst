@@ -21,6 +21,36 @@
       width: 100vh;
       height: 100vw;
       transform: translate(-50%, -50%) rotate(-90deg);
+      display: flex;
+      flex-direction: row;
+    }
+    /* Franja del footer: antes de rotar es una tira angosta pegada al
+       borde izquierdo; después de rotar -90deg termina como una barra
+       horizontal abajo de la pantalla física */
+    #footerBar {
+      width: 70px;
+      height: 100%;
+      flex-shrink: 0;
+      background-color: #E1653C;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #footerBar span {
+      display: inline-block;
+      /* Contrarrota el texto para que, sumado a la rotación del
+         padre, quede derecho en la pantalla física */
+      transform: rotate(90deg);
+      white-space: nowrap;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    #content {
+      position: relative;
+      flex: 1;
+      height: 100%;
     }
     iframe {
       width: 100% !important;
@@ -41,39 +71,26 @@
       background: transparent;
       cursor: default;
     }
-    /* Barra fija abajo de la pantalla física (no rota con el contenido) */
-    #footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 14px 10px;
-      background-color: #E1653C;
-      color: #ffffff;
-      text-align: center;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 20px;
-      font-weight: bold;
-      z-index: 20;
-      box-sizing: border-box;
-    }
   </style>
 </head>
 <body>
 
   <div id="rotator">
-    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-    <iframe
-      id="feed"
-      src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
-      scrolling="no"
-      allowtransparency="true"
-      class="lightwidget-widget">
-    </iframe>
-    <div id="clickCatcher" tabindex="0" onclick="activarPantallaCompleta()"></div>
+    <div id="footerBar">
+      <span>📷 Mirá esta publicación en Instagram — @colegiosantotomas.escobar</span>
+    </div>
+    <div id="content">
+      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+      <iframe
+        id="feed"
+        src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
+        scrolling="no"
+        allowtransparency="true"
+        class="lightwidget-widget">
+      </iframe>
+      <div id="clickCatcher" tabindex="0" onclick="activarPantallaCompleta()"></div>
+    </div>
   </div>
-
-  <div id="footer">📷 Mirá esta publicación en Instagram — @colegiosantotomas.escobar</div>
 
   <script>
     // Intenta activar pantalla completa apenas carga la página
