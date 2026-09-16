@@ -10,7 +10,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #fafafa;
+      background-color: #00669C;
     }
     #rotator {
       position: absolute;
@@ -21,17 +21,36 @@
       transform: translate(-50%, -50%) rotate(-90deg);
       display: flex;
       flex-direction: column;
+      padding: 24px;
     }
     #content {
       position: relative;
       flex: 1;
       width: 100%;
+      margin-bottom: 16px;
     }
     iframe {
       width: 100% !important;
       height: 100% !important;
       border: none;
       display: block;
+    }
+    /* Contenedor del feed de Instagram (foto/widget) */
+    #widgetWrap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    /* Video institucional, oculto hasta que le toca el turno */
+    #instVideo {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+      display: none;
     }
     #clickCatcher {
       position: absolute;
@@ -45,20 +64,29 @@
     }
     #footerBar {
       width: 100%;
-      height: 70px;
       flex-shrink: 0;
-      background-color: #E1653C;
+      background-color: #00669C;
+      border-top: 6px solid #F99C02;
+      border-radius: 6px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 12px 10px;
     }
-    #footerBar span {
+    #footerBar .linea1 {
       color: #ffffff;
       font-family: Arial, Helvetica, sans-serif;
-      font-weight: bold;
-      font-size: 20px;
+      font-size: 18px;
       text-align: center;
-      padding: 0 10px;
+    }
+    #footerBar .linea2 {
+      color: #F99C02;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      font-size: 22px;
+      text-align: center;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -66,25 +94,81 @@
 
   <div id="rotator">
     <div id="content">
-      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-      <iframe
-        id="feed"
-        src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
-        scrolling="no"
-        allowtransparency="true"
-        class="lightwidget-widget">
-      </iframe>
+      <div id="widgetWrap">
+        <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+        <iframe
+          id="feed"
+          src="https://lightwidget.com/widgets/87ec422e4d4f5a3793c65eb7e0b237bc.html"
+          scrolling="no"
+          allowtransparency="true"
+          class="lightwidget-widget">
+        </iframe>
+      </div>
+
+      <!-- Video institucional: se llena dinámicamente desde la lista de abajo -->
+      <video id="instVideo" muted playsinline></video>
+
       <div id="clickCatcher" tabindex="0" onclick="activarPantallaCompleta()"></div>
     </div>
     <div id="footerBar">
-      <span>📷 Mirá esta publicación en Instagram — @colegiosantotomas.escobar</span>
+      <span class="linea1">📷 Mirá esta publicación en Instagram</span>
+      <span class="linea2">@colegiosantotomas.escobar</span>
     </div>
   </div>
 
   <script>
+    // ============================================================
+    // VIDEOS INSTITUCIONALES
+    // Subí los archivos de video a una carpeta "videos" dentro de
+    // este mismo repositorio de GitHub, y listalos acá con su
+    // nombre exacto. Si dejás la lista vacía ([]), nunca se
+    // interrumpe el feed de fotos.
+    // ============================================================
+    var videosInstitucionales = [
+      "videos/video1.mp4",
+      "videos/video2.mp4",
+      "videos/video3.mp4",
+      "videos/video4.mp4",
+      "videos/video5.mp4",
+      "videos/video6.mp4",
+      "videos/video7.mp4",
+      "videos/video8.mp4"
+    ];
+
+    // Cuánto tiempo se muestra el feed de fotos antes de pasar a un
+    // video (en milisegundos). 60000 = 1 minuto.
+    var duracionFeedMs = 60000;
+
+    var indiceVideo = 0;
+
+    function mostrarWidget() {
+      document.getElementById('widgetWrap').style.display = 'block';
+      var vid = document.getElementById('instVideo');
+      vid.pause();
+      vid.style.display = 'none';
+      setTimeout(mostrarVideo, duracionFeedMs);
+    }
+
+    function mostrarVideo() {
+      if (videosInstitucionales.length === 0) {
+        setTimeout(mostrarVideo, duracionFeedMs);
+        return;
+      }
+      document.getElementById('widgetWrap').style.display = 'none';
+      var vid = document.getElementById('instVideo');
+      vid.src = videosInstitucionales[indiceVideo];
+      vid.style.display = 'block';
+      vid.currentTime = 0;
+      vid.play();
+      indiceVideo = (indiceVideo + 1) % videosInstitucionales.length;
+    }
+
+    document.getElementById('instVideo').addEventListener('ended', mostrarWidget);
+
     window.addEventListener('load', function () {
       activarPantallaCompleta();
       document.getElementById('clickCatcher').focus();
+      setTimeout(mostrarVideo, duracionFeedMs);
     });
 
     document.addEventListener('keydown', function (e) {
