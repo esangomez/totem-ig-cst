@@ -188,9 +188,19 @@
       }
     });
 
-    setTimeout(function () {
-      window.location.reload();
-    }, 30 * 60 * 1000);
+    // Si en algún momento se sale de pantalla completa (por cualquier
+    // motivo), reintenta volver a entrar automáticamente, sin
+    // esperar a que alguien toque la pantalla.
+    document.addEventListener('fullscreenchange', function () {
+      if (!document.fullscreenElement) {
+        activarPantallaCompleta();
+      }
+    });
+    document.addEventListener('webkitfullscreenchange', function () {
+      if (!document.webkitFullscreenElement) {
+        activarPantallaCompleta();
+      }
+    });
 
     function activarPantallaCompleta() {
       let elem = document.documentElement;
