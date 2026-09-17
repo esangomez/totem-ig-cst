@@ -47,15 +47,21 @@
       width: 100%;
       height: 100%;
     }
-    /* Video institucional, oculto hasta que le toca el turno */
+    /* Video institucional: pantalla completa fija, AFUERA del
+       contenedor rotado. El acelerador de hardware del Fire Stick
+       ignora las rotaciones por CSS, así que el video ya viene
+       pre-rotado en sus propios píxeles (con ffmpeg) y se muestra
+       tal cual, sin transformarlo acá. */
     #instVideo {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
       background: #000;
       display: none;
+      z-index: 50;
     }
     #clickCatcher {
       position: absolute;
@@ -110,9 +116,6 @@
         </iframe>
       </div>
 
-      <!-- Video institucional: se llena dinámicamente desde la lista de abajo -->
-      <video id="instVideo" muted playsinline></video>
-
       <div id="clickCatcher" tabindex="0" onclick="activarPantallaCompleta()"></div>
     </div>
     <div id="footerBar">
@@ -120,6 +123,9 @@
       <span class="linea2">@colegiosantotomas.escobar</span>
     </div>
   </div>
+
+  <!-- Video institucional: se llena dinámicamente desde la lista de abajo -->
+  <video id="instVideo" muted playsinline></video>
 
   <script>
     // ============================================================
